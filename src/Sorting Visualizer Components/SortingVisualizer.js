@@ -58,18 +58,16 @@ class SortingVisualizer extends Component {
     }
 
     showAnimation = (sortAnimationFunction)=>{
+        //it takes animation array and manipulate the DOM to show sorting animation
         console.log("sort");
 
+        //getting animation array
         let animation = sortAnimationFunction(this.state.array);
+
         const bars = document.getElementsByClassName("visualizer-elements");
-        // const createArray = document.querySelector(".create-array");
-        // const speedSlidder = document.querySelector(".speed-slider");
-        // const sizeSlidder = document.querySelector(".size-slider");
-        // createArray.disabled = true;
-        // speedSlidder.disabled = true;
-        // sizeSlidder.disabled = true;
-        //blocking all the buttons and slidder while animation
         const objectsToBlock = document.querySelectorAll(".toBlockWhileAnimation");
+
+        // blocking buttons and slider while animation
         objectsToBlock.forEach(element => {
             element.classList.remove("cursor-pointer");
             element.classList.add("cursor-not-allowed");
