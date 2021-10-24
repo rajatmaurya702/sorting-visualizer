@@ -34,7 +34,6 @@ code {
   display: inline-block;
   font-size: 16px;
   margin: 4px 4px;
-  cursor: pointer;
   border-radius: 2px;
 }
 .button:hover{
@@ -43,11 +42,12 @@ code {
 
 button:disabled {
   background-color: #526c8a;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .visualizer {
   text-align: center;
+  margin-top: 1rem;
   /* align-items: bottom; */
   /* text-align: bottom; */
 }
@@ -55,7 +55,6 @@ button:disabled {
 
 /* range slider */
 .slider {
-
   -webkit-appearance: none;
   height: 15px;
   background: #d3d3d3;
@@ -84,3 +83,19 @@ button:disabled {
   background: #04AA6D;
   cursor: pointer;
 }
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* disabled work */
+/* .disabled { */
+  /* cursor: no-drop; */
+  /* pointer-events: none; */
+  /* cursor: not-allowed; */
+/* } */

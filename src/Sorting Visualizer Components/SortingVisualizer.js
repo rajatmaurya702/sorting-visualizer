@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bubbleSortAnimation } from '../Sorting Algorithms/bubbleSort';
+import { heapSortAnimation } from '../Sorting Algorithms/heapSort';
 import { insertionSortAnimation } from '../Sorting Algorithms/insertionSort';
+import { mergeSortAnimation } from '../Sorting Algorithms/mergeSort';
 import { quicksortAnimation } from '../Sorting Algorithms/quickSort';
 import { selectionSortAnimation } from '../Sorting Algorithms/selectionSort';
 
@@ -31,7 +33,7 @@ class SortingVisualizer extends Component {
     create_array(array_size = this.state.array_size){
         console.log("create_array()");
         let new_array = [];
-        const max_value = 600;
+        const max_value = 550;
         for(let i = 0; i< array_size; i ++){
             const new_value = ((Math.floor((Math.random() * 1000))) % max_value) + 1;
             new_array.push(new_value);
@@ -60,13 +62,22 @@ class SortingVisualizer extends Component {
 
         let animation = sortAnimationFunction(this.state.array);
         const bars = document.getElementsByClassName("visualizer-elements");
-        const createArray = document.querySelector(".create-array");
-        const speedSlidder = document.querySelector(".speed-slider");
-        const sizeSlidder = document.querySelector(".size-slider");
-        createArray.disabled = true;
-        speedSlidder.disabled = true;
-        sizeSlidder.disabled = true;
-        console.log("create array disable", createArray.disabled);
+        // const createArray = document.querySelector(".create-array");
+        // const speedSlidder = document.querySelector(".speed-slider");
+        // const sizeSlidder = document.querySelector(".size-slider");
+        // createArray.disabled = true;
+        // speedSlidder.disabled = true;
+        // sizeSlidder.disabled = true;
+        //blocking all the buttons and slidder while animation
+        const objectsToBlock = document.querySelectorAll(".toBlockWhileAnimation");
+        objectsToBlock.forEach(element => {
+            element.classList.remove("cursor-pointer");
+            element.classList.add("cursor-not-allowed");
+            element.disabled = true;
+
+        });
+
+        // console.log("create array disable", createArray.disabled);
         console.log("animation.length", animation.length);
 
         let interval = 500/(this.state.speed), it = 0;
@@ -74,9 +85,15 @@ class SortingVisualizer extends Component {
         let ob = setInterval(() => {
             if(it >= animation.length){
                 clearInterval(ob);
-                createArray.disabled = false;
-                speedSlidder.disabled = false;
-                sizeSlidder.disabled = false;
+                // createArray.disabled = false;
+                // speedSlidder.disabled = false;
+                // sizeSlidder.disabled = false;
+
+                objectsToBlock.forEach(element => {
+                    element.classList.remove("cursor-not-allowed");
+                    element.classList.add("cursor-pointer");
+                    element.disabled = false;
+                });
             }
             else{
                  // console.log(animation[i].id1);
@@ -124,16 +141,19 @@ class SortingVisualizer extends Component {
             <> 
                 <div className="header">
                     <h1>Sorting Visualizer</h1>
-                    <button className="button sort" onClick={() => {this.showAnimation(bubbleSortAnimation)}}>Bubble Sort</button>
-                    <button className="button sort" onClick={() => {this.showAnimation(insertionSortAnimation)}}>Insertion Sort</button>
-                    <button className="button sort" onClick={() => {this.showAnimation(selectionSortAnimation)}}>Selection Sort</button>
-                    <button className="button sort" onClick={() => {this.showAnimation(quicksortAnimation)}}>QuickSort Sort</button>
+                    <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(bubbleSortAnimation)}}>Bubble Sort</button>
+                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(insertionSortAnimation)}}>Insertion Sort</button>
+                    <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(selectionSortAnimation)}}>Selection Sort</button>
+                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(quicksortAnimation)}}>QuickSort Sort</button>
+                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(heapSortAnimation)}}>Heap Sort</button>
+                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(mergeSortAnimation)}}>Merge Sort</button>
 
-                    <button className="button create-array" onClick={this.reset_array} >Reset</button>
+
+                    <button className="button create-array toBlockWhileAnimation cursor-pointer" onClick={this.reset_array} >Reset</button>
                     <level for="speed-slid">Speed</level>
-                    <input type="range" min="1" max="40" name="range" defaultValue="10" className="slider speed-slider"  id="speed-slid" onChange={(e) => {this.speedChange(e)}} ref={(input)=> this.myinput = input}></input>
+                    <input type="range" min="1" max="40" name="range" defaultValue="10" className="slider toBlockWhileAnimation  speed-slider cursor-pointer"  id="speed-slid" onChange={(e) => {this.speedChange(e)}} ref={(input)=> this.myinput = input}></input>
                     <level for="sizeOfArray">Size</level>
-                    <input type="range" min="10" max="80" name="range1" defaultValue="30" className="array-size slider size-slider"  id="sizeOfArray" onChange={(e) => {this.arraySizeChange(e)}} ref={(input)=> this.myinput1 = input}></input>
+                    <input type="range" min="10" max="80" name="range1" defaultValue="30" className="array-size  toBlockWhileAnimation slider size-slider cursor-pointer"  id="sizeOfArray" onChange={(e) => {this.arraySizeChange(e)}} ref={(input)=> this.myinput1 = input}></input>
                     {/* no effect of ref ?? */}
                 </div>
                 <div className="visualizer">
