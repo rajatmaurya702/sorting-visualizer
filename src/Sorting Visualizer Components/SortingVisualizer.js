@@ -12,10 +12,12 @@ class SortingVisualizer extends Component {
         this.state = { 
             array:[], //array of int
             array_size: 30, 
-            speed:10, 
+            speed:5, 
             isVisualSorted: false,
             backgroundColor : {
-                default: "green"
+                default: "#778beb",
+                rightPosition: "#20bf6b",
+                wrongPosition: "#FC427B"
             }
         }
         this.create_array = this.create_array.bind(this);
@@ -99,14 +101,14 @@ class SortingVisualizer extends Component {
                  const element2 = bars[animation[it].i2];
  
                 if(animation[it].ok){
-                    element1.style.backgroundColor = element2.style.backgroundColor= "blue";
+                    element1.style.backgroundColor = element2.style.backgroundColor= this.state.backgroundColor.rightPosition;
                     setTimeout(() => {
                         element1.style.backgroundColor = this.state.backgroundColor.default;
                         element2.style.backgroundColor = this.state.backgroundColor.default;
                     }, timeout);
                 }
                 else{
-                    element1.style.backgroundColor = element2.style.backgroundColor= "red";
+                    element1.style.backgroundColor = element2.style.backgroundColor= this.state.backgroundColor.wrongPosition;
                     setTimeout(() => {
                         element1.style.backgroundColor = this.state.backgroundColor.default;
                         element2.style.backgroundColor = this.state.backgroundColor.default;
@@ -139,20 +141,27 @@ class SortingVisualizer extends Component {
             <> 
                 <div className="header">
                     <h1>Sorting Visualizer</h1>
-                    <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(bubbleSortAnimation)}}>Bubble Sort</button>
-                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(insertionSortAnimation)}}>Insertion Sort</button>
-                    <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(selectionSortAnimation)}}>Selection Sort</button>
-                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(quicksortAnimation)}}>QuickSort Sort</button>
-                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(heapSortAnimation)}}>Heap Sort</button>
-                    <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(mergeSortAnimation)}}>Merge Sort</button>
-
-
-                    <button className="button create-array toBlockWhileAnimation cursor-pointer" onClick={this.reset_array} >Reset</button>
-                    <level for="speed-slid">Speed</level>
-                    <input type="range" min="1" max="40" name="range" defaultValue="10" className="slider toBlockWhileAnimation  speed-slider cursor-pointer"  id="speed-slid" onChange={(e) => {this.speedChange(e)}} ref={(input)=> this.myinput = input}></input>
-                    <level for="sizeOfArray">Size</level>
-                    <input type="range" min="10" max="80" name="range1" defaultValue="30" className="array-size  toBlockWhileAnimation slider size-slider cursor-pointer"  id="sizeOfArray" onChange={(e) => {this.arraySizeChange(e)}} ref={(input)=> this.myinput1 = input}></input>
-                    {/* no effect of ref ?? */}
+                    <div className="buttons-div">
+                        <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(bubbleSortAnimation)}}>Bubble Sort</button>
+                        <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(insertionSortAnimation)}}>Insertion Sort</button>
+                        <button className="button sort  toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(selectionSortAnimation)}}>Selection Sort</button>
+                        <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(quicksortAnimation)}}>QuickSort Sort</button>
+                        <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(heapSortAnimation)}}>Heap Sort</button>
+                        <button className="button sort toBlockWhileAnimation cursor-pointer" onClick={() => {this.showAnimation(mergeSortAnimation)}}>Merge Sort</button>
+                        <button className="button create-array toBlockWhileAnimation cursor-pointer" onClick={this.reset_array} >Reset</button>
+                    </div>
+                    <div className="sliders">
+                        <div className="slider-div">
+                            <level for="speed-slid">Speed</level>
+                            <input type="range" min="1" max="40" name="range" defaultValue="5" className="slider toBlockWhileAnimation  speed-slider cursor-pointer"  id="speed-slid" onChange={(e) => {this.speedChange(e)}} ref={(input)=> this.myinput = input}></input>
+                        </div>
+                        <div className="slider-div">
+                            <level for="sizeOfArray">Size</level>
+                            <input type="range" min="10" max="80" name="range1" defaultValue="20" className="array-size  toBlockWhileAnimation slider size-slider cursor-pointer"  id="sizeOfArray" onChange={(e) => {this.arraySizeChange(e)}} ref={(input)=> this.myinput1 = input}></input>
+                        </div>
+                        
+                        {/* no effect of ref ?? */}
+                    </div>
                 </div>
                 <div className="visualizer">
                     {this.create_visualizer_elements()}
